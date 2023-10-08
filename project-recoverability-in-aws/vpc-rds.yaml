@@ -123,6 +123,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Public Subnet (${AZ1})
             - { AZ1: !Select [ 0, !GetAZs  '' ] }
+            
   PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -135,6 +136,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Public Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
+            
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -147,6 +149,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Private Subnet (${AZ1})
             - { AZ1: !Select [ 0, !GetAZs  '' ] }
+            
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -159,6 +162,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Private Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
+            
   PrivateRdsSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -169,8 +173,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub
-            - ${VpcName} Private Subnet (${AZ1})
+            - ${VpcName} Private RDS Subnet (${AZ1})
             - { AZ1: !Select [ 0, !GetAZs  '' ] }
+            
   PrivateRdsSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -181,7 +186,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub
-            - ${VpcName} Private Subnet (${AZ2})
+            - ${VpcName} Private RDS Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
 
   PublicRouteTable:
@@ -232,7 +237,7 @@ Resources:
   DatabaseSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Udacity ARR Project - Database Security Group
+      GroupDescription: Database Security Group which control RDS Traffic
       GroupName: UDARR-Database
       SecurityGroupIngress:
         -   Description: Application EC2 instances
@@ -244,6 +249,16 @@ Resources:
       Tags:
         - Key: Name
           Value: UDARR-Database
+          
+  DatabaseSecurityGroupIngress:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    DependsOn: "DatabaseSecurityGroup"
+    Properties:
+      GroupId: !Ref "DatabaseSecurityGroup"
+      IpProtocol: "tcp"
+      FromPort: "0"
+      ToPort: "65535"
+      SourceSecurityGroupId: !Ref "DatabaseSecurityGroup"
 
   ApplicationSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -269,13 +284,12 @@ Resources:
       MasterUserPassword: !Ref "DBPassword"
       DatabaseName: "udacity"
       Engine: "aurora"
-      EngineMode: "provisioned"
-      DBClusterInstanceClass: "db.t3.medium"
+      EngineMode: "serverless"
       VpcSecurityGroupIds:
       - !Ref "DatabaseSecurityGroup"
       ScalingConfiguration:
         AutoPause: true
-        MaxCapacity: 3
+        MaxCapacity: 4
         MinCapacity: 2
         SecondsUntilAutoPause: 300
 
