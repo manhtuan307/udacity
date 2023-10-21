@@ -45,6 +45,9 @@ Parameters:
     Default: "dbuser"
   DBPassword:
     Type: "String"
+  DBName:
+    Type: "String"
+    Default: "udacity"
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -261,23 +264,17 @@ Resources:
         - Key: Name
           Value: UDARR-Application
           
-  RDSCluster:
-    Type: "AWS::RDS::DBCluster"
+  RDSDBInstance:
+    Type: "AWS::RDS::DBInstance"
     Properties:
-      DBSubnetGroupName: !Ref "DatabaseSubnetGroup"
-      MasterUsername: !Ref "DBUsername"
-      MasterUserPassword: !Ref "DBPassword"
-      DatabaseName: "udacity"
-      Engine: "aurora"
-      EngineMode: "provisioned"
-      DBClusterInstanceClass: "db.t3.medium"
-      VpcSecurityGroupIds:
-      - !Ref "DatabaseSecurityGroup"
-      ScalingConfiguration:
-        AutoPause: true
-        MaxCapacity: 3
-        MinCapacity: 2
-        SecondsUntilAutoPause: 300
+      DBSubnetGroupName: !Ref DatabaseSubnetGroup
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      DBName: !Ref "DBName"
+      Engine: MySQL
+      EngineVersion: 8.0.34
+      AllocatedStorage: '5'
+      DBInstanceClass: db.t2.small
 
 Outputs:
   VPC:
