@@ -126,6 +126,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Public Subnet (${AZ1})
             - { AZ1: !Select [ 0, !GetAZs  '' ] }
+            
   PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -138,6 +139,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Public Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
+            
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -150,6 +152,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Private Subnet (${AZ1})
             - { AZ1: !Select [ 0, !GetAZs  '' ] }
+            
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -162,6 +165,7 @@ Resources:
           Value: !Sub
             - ${VpcName} Private Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
+            
   PrivateRdsSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -172,8 +176,9 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub
-            - ${VpcName} Private Subnet (${AZ1})
+            - ${VpcName} Private RDS Subnet (${AZ1})
             - { AZ1: !Select [ 0, !GetAZs  '' ] }
+            
   PrivateRdsSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -184,7 +189,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub
-            - ${VpcName} Private Subnet (${AZ2})
+            - ${VpcName} Private RDS Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
 
   PublicRouteTable:
@@ -235,7 +240,7 @@ Resources:
   DatabaseSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Udacity ARR Project - Database Security Group
+      GroupDescription: Database Security Group which control RDS Traffic
       GroupName: UDARR-Database
       SecurityGroupIngress:
         -   Description: Application EC2 instances
