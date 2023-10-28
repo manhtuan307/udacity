@@ -39,14 +39,36 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
     Type: String
     Default: 10.1.26.0/24  
-   
+
+  DBClusterIdentifier:
+    Type: String
+    Default: "mysql-cluster"
+  DBEngine:
+    Type: String
+    Default: "MySQL"
+  DBEngineVersion:
+    Type: String
+    Default: "8.0.34"
+  DBInstanceClass:
+    Type: String
+    Default: "db.t2.small"
+  DBAllocatedStorage:
+    Type: Number
+    Default: 5
+  DBIops:
+    Type: Number
+    Default: 50
   DBUsername:
-    Type: "String"
+    Type: String
+    MinLength: '2'
+    MaxLength: '25'
     Default: "dbuser"
   DBPassword:
-    Type: "String"
+    Type: String
+    MinLength: '8'
+    MaxLength: '40'
   DBName:
-    Type: "String"
+    Type: String
     Default: "udacity"
 
 Metadata:
@@ -269,17 +291,17 @@ Resources:
         - Key: Name
           Value: UDARR-Application
           
-  RDSDBInstance:
-    Type: "AWS::RDS::DBInstance"
+  RDSCluster:
+    Type: "AWS::RDS::DBCluster"
     Properties:
-      DBSubnetGroupName: !Ref DatabaseSubnetGroup
       MasterUsername: !Ref DBUsername
       MasterUserPassword: !Ref DBPassword
-      DBName: !Ref "DBName"
-      Engine: MySQL
-      EngineVersion: 8.0.34
-      AllocatedStorage: '5'
-      DBInstanceClass: db.t2.small
+      DBClusterIdentifier: !Ref DBClusterIdentifier
+      Engine: !Ref DBEngine
+      EngineVersion: !Ref DBEngineVersion
+      AllocatedStorage: !Ref DBAllocatedStorage
+      Iops: !Ref DBIops
+      DBClusterInstanceClass: !Ref DBInstanceClass
 
 Outputs:
   VPC:
