@@ -50,13 +50,13 @@ Parameters:
     Default: "mysql-cluster"
   DBEngine:
     Type: String
-    Default: "MySQL"
+    Default: "mysql"
   DBEngineVersion:
     Type: String
     Default: "8.0.34"
   DBInstanceClass:
     Type: String
-    Default: "db.t2.small"
+    Default: "db.m5d.large"
   DBAllocatedStorage:
     Type: Number
     Default: 5
@@ -75,6 +75,8 @@ Parameters:
   DBName:
     Type: String
     Default: "udacity"
+    MinLength: '2'
+    MaxLength: '40'
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -318,6 +320,7 @@ Resources:
     Properties:
       MasterUsername: !Ref DBUsername
       MasterUserPassword: !Ref DBPassword
+      DatabaseName: !Ref DBName
       DBClusterIdentifier: !Ref DBClusterIdentifier
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       Engine: !Ref DBEngine
