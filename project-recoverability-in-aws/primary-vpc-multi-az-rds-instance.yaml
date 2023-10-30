@@ -23,26 +23,16 @@ Parameters:
   PrivateSubnet1CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
     Type: String
-    Default: 10.1.13.0/24
+    Default: 10.1.20.0/24
 
   PrivateSubnet2CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
     Type: String
-    Default: 10.1.14.0/24
-    
-  PrivateRdsSubnet1CIDR:
-    Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
-    Type: String
-    Default: 10.1.16.0/24
-
-  PrivateRdsSubnet2CIDR:
-    Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
-    Type: String
-    Default: 10.1.17.0/24
+    Default: 10.1.21.0/24
 
   DBInstanceIdentifier:
     Type: String
-    Default: "mysql-multi-za-instance"
+    Default: "primary-db-instance"
   DBEngine:
     Type: String
     Default: "mysql"
@@ -88,8 +78,6 @@ Metadata:
           - PublicSubnet2CIDR
           - PrivateSubnet1CIDR
           - PrivateSubnet2CIDR
-          - PrivateRdsSubnet1CIDR
-          - PrivateRdsSubnet2CIDR
 
     ParameterLabels:
       ResourceTag:
@@ -106,10 +94,6 @@ Metadata:
         default: "Private Subnet 1"
       PrivateSubnet2CIDR:
         default: "Private Subnet 2"
-      PrivateRdsSubnet1CIDR:
-        default: "Private RDS Subnet 1"
-      PrivateRdsSubnet2CIDR:
-        default: "Private RDS Subnet 2"
 
 Resources:
   VPC:
@@ -186,32 +170,6 @@ Resources:
           Value: !Sub
             - ${VpcName} Private Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
-            
-  PrivateRdsSubnet1:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateRdsSubnet1CIDR
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: Name
-          Value: !Sub
-            - ${VpcName} Private RDS Subnet (${AZ1})
-            - { AZ1: !Select [ 0, !GetAZs  '' ] }
-            
-  PrivateRdsSubnet2:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateRdsSubnet2CIDR
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: Name
-          Value: !Sub
-            - ${VpcName} Private RDS Subnet (${AZ2})
-            - { AZ2: !Select [ 1, !GetAZs  '' ] }
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -255,8 +213,8 @@ Resources:
       DBSubnetGroupName: "databasesubnetgroup"
       DBSubnetGroupDescription: "Database Subnet Group"
       SubnetIds:
-      - !Ref "PrivateRdsSubnet1"
-      - !Ref "PrivateRdsSubnet2"
+      - !Ref "PrivateSubnet1"
+      - !Ref "PrivateSubnet2"
 
   DatabaseSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -316,12 +274,8 @@ Outputs:
     Value: !Join [ ", ", [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]]
 
   PrivateSubnets:
-    Description: A list of the private subnets which be used for applications
+    Description: A list of the private subnets which be used for applications and RDS
     Value: !Join [ ", ", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]]
-
-  PrivateRDSSubnets:
-    Description: A list of the private subnets which be used for RDS
-    Value: !Join [ ", ", [ !Ref PrivateRdsSubnet1, !Ref PrivateRdsSubnet2 ]]
 
   DatabaseSecurityGroup:
     Description: ID of the database security group

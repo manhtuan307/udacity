@@ -8,46 +8,33 @@ Parameters:
   VpcCIDR:
     Description: Please enter the IP range (CIDR notation) for this VPC
     Type: String
-    Default: 10.1.0.0/16
+    Default: 10.2.0.0/16
 
   PublicSubnet1CIDR:
     Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
     Type: String
-    Default: 10.1.10.0/24
+    Default: 10.2.10.0/24
 
   PublicSubnet2CIDR:
     Description: Please enter the IP range (CIDR notation) for the public subnet in the second Availability Zone
     Type: String
-    Default: 10.1.11.0/24
+    Default: 10.2.11.0/24
 
   PrivateSubnet1CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
     Type: String
-    Default: 10.1.13.0/24
+    Default: 10.2.20.0/24
 
   PrivateSubnet2CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
     Type: String
-    Default: 10.1.14.0/24
-    
-  PrivateRdsSubnet1CIDR:
-    Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
-    Type: String
-    Default: 10.1.16.0/24
+    Default: 10.2.21.0/24
 
-  PrivateRdsSubnet2CIDR:
-    Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
+  SourceDBInstanceIdentifier:
     Type: String
-    Default: 10.1.17.0/24
-
-  PrivateRdsSubnet3CIDR:
-    Description: Please enter the IP range (CIDR notation) for the private subnet in the third Availability Zone
+  DBInstanceIdentifier:
     Type: String
-    Default: 10.1.18.0/24  
-
-  DBClusterIdentifier:
-    Type: String
-    Default: "mysql-cluster"
+    Default: "rea-replica-db-instance"
   DBEngine:
     Type: String
     Default: "mysql"
@@ -56,13 +43,10 @@ Parameters:
     Default: "8.0.34"
   DBInstanceClass:
     Type: String
-    Default: "db.m5d.large"
+    Default: "db.t3.micro"
   DBAllocatedStorage:
     Type: Number
     Default: 5
-  DBIops:
-    Type: Number
-    Default: 50
   DBUsername:
     Type: String
     MinLength: '2'
@@ -96,9 +80,6 @@ Metadata:
           - PublicSubnet2CIDR
           - PrivateSubnet1CIDR
           - PrivateSubnet2CIDR
-          - PrivateRdsSubnet1CIDR
-          - PrivateRdsSubnet2CIDR
-          - PrivateRdsSubnet3CIDR
 
     ParameterLabels:
       ResourceTag:
@@ -115,12 +96,6 @@ Metadata:
         default: "Private Subnet 1"
       PrivateSubnet2CIDR:
         default: "Private Subnet 2"
-      PrivateRdsSubnet1CIDR:
-        default: "Private RDS Subnet 1"
-      PrivateRdsSubnet2CIDR:
-        default: "Private RDS Subnet 2"
-      PrivateRdsSubnet3CIDR:
-        default: "Private RDS Subnet 3"
 
 Resources:
   VPC:
@@ -197,45 +172,6 @@ Resources:
           Value: !Sub
             - ${VpcName} Private Subnet (${AZ2})
             - { AZ2: !Select [ 1, !GetAZs  '' ] }
-            
-  PrivateRdsSubnet1:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateRdsSubnet1CIDR
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: Name
-          Value: !Sub
-            - ${VpcName} Private RDS Subnet (${AZ1})
-            - { AZ1: !Select [ 0, !GetAZs  '' ] }
-            
-  PrivateRdsSubnet2:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateRdsSubnet2CIDR
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: Name
-          Value: !Sub
-            - ${VpcName} Private RDS Subnet (${AZ2})
-            - { AZ2: !Select [ 1, !GetAZs  '' ] }
-
-  PrivateRdsSubnet3:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      AvailabilityZone: !Select [ 2, !GetAZs  '' ]
-      CidrBlock: !Ref PrivateRdsSubnet3CIDR
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: Name
-          Value: !Sub
-            - ${VpcName} Private RDS Subnet (${AZ3})
-            - { AZ3: !Select [ 2, !GetAZs  '' ] }
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -279,9 +215,8 @@ Resources:
       DBSubnetGroupName: "databasesubnetgroup"
       DBSubnetGroupDescription: "Database Subnet Group"
       SubnetIds:
-      - !Ref "PrivateRdsSubnet1"
-      - !Ref "PrivateRdsSubnet2"
-      - !Ref "PrivateRdsSubnet3"
+      - !Ref "PrivateSubnet1"
+      - !Ref "PrivateSubnet2"
 
   DatabaseSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -315,20 +250,21 @@ Resources:
         - Key: Name
           Value: UDARR-Application
           
-  RDSCluster:
-    Type: "AWS::RDS::DBCluster"
+  RDSInstance:
+    Type: "AWS::RDS::DBInstance"
     Properties:
       MasterUsername: !Ref DBUsername
       MasterUserPassword: !Ref DBPassword
-      DatabaseName: !Ref DBName
-      DBClusterIdentifier: !Ref DBClusterIdentifier
+      DBName: !Ref DBName
+      SourceDBInstanceIdentifier: !Ref SourceDBInstanceIdentifier
+      DBInstanceIdentifier: !Ref DBInstanceIdentifier
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       Engine: !Ref DBEngine
       EngineVersion: !Ref DBEngineVersion
       AllocatedStorage: !Ref DBAllocatedStorage
-      Iops: !Ref DBIops
-      DBClusterInstanceClass: !Ref DBInstanceClass
-      VpcSecurityGroupIds:
+      DBInstanceClass: !Ref DBInstanceClass
+      MultiAZ: true
+      VPCSecurityGroups: 
         - !Ref DatabaseSecurityGroup
 
 Outputs:
@@ -341,12 +277,8 @@ Outputs:
     Value: !Join [ ", ", [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]]
 
   PrivateSubnets:
-    Description: A list of the private subnets which be used for applications
+    Description: A list of the private subnets which be used for applications and RDS
     Value: !Join [ ", ", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]]
-
-  PrivateRDSSubnets:
-    Description: A list of the private subnets which be used for RDS
-    Value: !Join [ ", ", [ !Ref PrivateRdsSubnet1, !Ref PrivateRdsSubnet2, !Ref PrivateRdsSubnet3 ]]
 
   DatabaseSecurityGroup:
     Description: ID of the database security group
