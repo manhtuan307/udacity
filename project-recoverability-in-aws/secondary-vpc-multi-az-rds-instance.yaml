@@ -196,6 +196,18 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${VpcName} Private Routes
+
+  PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet1
+
+  PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet2
           
   DatabaseSubnetGroup:
     Type: "AWS::RDS::DBSubnetGroup"
