@@ -32,9 +32,11 @@ Parameters:
 
   SourceDBInstanceIdentifier:
     Type: String
+  DBSourceRegion:
+    Type: String
   DBInstanceIdentifier:
     Type: String
-    Default: "rea-replica-db-instance"
+    Default: "read-replica-db-instance"
   DBEngine:
     Type: String
     Default: "mysql"
@@ -47,20 +49,6 @@ Parameters:
   DBAllocatedStorage:
     Type: Number
     Default: 5
-  DBUsername:
-    Type: String
-    MinLength: '2'
-    MaxLength: '25'
-    Default: "dbuser"
-  DBPassword:
-    Type: String
-    MinLength: '8'
-    MaxLength: '40'
-  DBName:
-    Type: String
-    Default: "udacity"
-    MinLength: '2'
-    MaxLength: '40'
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -253,17 +241,14 @@ Resources:
   RDSInstance:
     Type: "AWS::RDS::DBInstance"
     Properties:
-      MasterUsername: !Ref DBUsername
-      MasterUserPassword: !Ref DBPassword
-      DBName: !Ref DBName
       SourceDBInstanceIdentifier: !Ref SourceDBInstanceIdentifier
+      SourceRegion: !Ref DBSourceRegion
       DBInstanceIdentifier: !Ref DBInstanceIdentifier
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       Engine: !Ref DBEngine
       EngineVersion: !Ref DBEngineVersion
       AllocatedStorage: !Ref DBAllocatedStorage
       DBInstanceClass: !Ref DBInstanceClass
-      MultiAZ: true
       VPCSecurityGroups: 
         - !Ref DatabaseSecurityGroup
 
