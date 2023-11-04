@@ -1,8 +1,8 @@
 Write a paragraph or two describing the achievable Recovery Time Objective (RTO) and Recovery Point Objective (RPO) for this Multi-AZ, multi-region database in terms of:
 
-1. Minimum RTO for a single AZ outage: a few minutes
+1. Minimum RTO for a single AZ outage: a few minutes (usually 1–2 minutes)
 
-	If multi-AZ configuration is setup, RDS will automatically fails over to a standby instance in another AZ. This process can take a few minutes to complete.
+	If Multi-AZ configuration is setup, RDS will automatically fails over to a standby instance in another AZ without any manual intervention. This process usually take 1–2 minutes to complete.
 
 2. Minimum RTO for a single region outage: can be 1 hour
 
@@ -17,13 +17,12 @@ Write a paragraph or two describing the achievable Recovery Time Objective (RTO)
 	
 	So - roughly need 1 hour
 
-3. Minimum RPO for a single AZ outage: can be zero or a few minutes
+3. Minimum RPO for a single AZ outage: should be zero
 
-	If multi-AZ configuration is setup,
-
-
+	If Multi-AZ configuration is setup, data is synchronously copy to a standby database instance in another Availability Zone.
+	Therefore in case of primary instance failed, it should have no data loss and RPO should be zero.
 	
-4. Minimum RPO for a single region outage
+4. Minimum RPO for a single region outage (depends on how often data is backed up - can be 1 hour, etc)
 
 	If automated backups enabled for RDS database, the RPO depends on how often data is backed up. Assume that data be backed up every hour, the minimum RPO will be 1 hour.
 	
