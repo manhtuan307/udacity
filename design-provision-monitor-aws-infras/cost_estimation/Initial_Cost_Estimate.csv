@@ -1,13 +1,13 @@
 ﻿Estimate summary
 Upfront cost,Monthly cost,Total 12 months cost,Currency
-0,8750.82,105009.84,USD
+0,8956.68,107480.16,USD
 ,,* Includes upfront cost
 
 
 Detailed Estimate
 Group hierarchy,Region,Description,Service,Upfront,Monthly,First 12 months total,Currency,Status,Configuration summary
-Initial_Cost_Estimate,US East (N. Virginia),Web Servers (3 instances),Amazon EC2 ,0,308.79,3705.48,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 3), Advance EC2 instance (m5.xlarge), Pricing strategy ( 1 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
-Initial_Cost_Estimate,US East (N. Virginia),Application Servers (3 instances),Amazon EC2 ,0,308.79,3705.48,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 3), Advance EC2 instance (m5.xlarge), Pricing strategy ( 1 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+Initial_Cost_Estimate,US East (N. Virginia),Web Servers (4 instances),Amazon EC2 ,0,411.72,4940.64,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 4), Advance EC2 instance (m5.xlarge), Pricing strategy ( 1 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+Initial_Cost_Estimate,US East (N. Virginia),Application Servers (4 instances),Amazon EC2 ,0,411.72,4940.64,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 4), Advance EC2 instance (m5.xlarge), Pricing strategy ( 1 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
 Initial_Cost_Estimate,US East (N. Virginia),Database (1 MasterDB and 1 ReadReplica),Amazon RDS for PostgreSQL,0,3717.5860000000002,44611.03,USD,,"Storage volume (General Purpose SSD (gp2)), Storage amount (3 TB), Nodes (2), Instance Type (db.m5.2xlarge), Utilization (On-Demand only) (100 %Utilized/Month), Deployment Option (Multi-AZ), Pricing Model (Reserved), Lease Offering Term (1yr), Purchase Option (No Upfront), Additional backup storage (10 TB)"
 Initial_Cost_Estimate,US East (N. Virginia),Application Load Balancers (2 load balancers),Application Load Balancer,0,50.370000000000005,604.44,USD,,Number of Application Load Balancers (2)
 Initial_Cost_Estimate,US East (N. Virginia),NAT Gateways (2 instances + Data Transfer by NAT),Network Address Translation (NAT) Gateway,0,250.02,3000.24,USD,,Number of NAT Gateways (2)
