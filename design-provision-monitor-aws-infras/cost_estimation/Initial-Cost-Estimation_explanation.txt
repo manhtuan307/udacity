@@ -19,11 +19,13 @@ Assume each month, for CloudFront we need
 - around 5 TB data transfer for content which not be cached at Edge Server, need to access to S3 origin to get those data and cache at Edge Server after that.
 - around 30 TB to deliver content which be cached at Edge Server to client machines
 
-With around 450 millions of requests per month -> assume that those requests just distributed mostly in around 12 hours per day (rarely access at night)
+With around 450 millions of requests per month -> assume that those requests just distributed mostly in around 12 hours per day (users just sometimes access at night)
 -> we have 450000000 / (30 * 12 * 3600) ~ 347 (requests per second)
+-> We can assume that at peak hour, just around 1500 requests per second for entire system.
 
 -> With assumption that the application is properly designed and implemented, those requests should not consume too many resources
--> With 4 instances of web servers (m5.xlarge) and 4 instances of application servers and 2 db.m5.x2large we should be able to handle that workload easily.
+-> With 4 instances of web servers (m5.xlarge) and 4 instances of application servers and 2 db.m5.x2large for database,
+	the system should be able to handle that workload easily (maybe servers just use around maximum 45% of CPU and RAM at peak hour)
 
 Assume that database size is around 1 TB after launching a few years
 -> So 3 TB storage volume should be enough for RDS (one volumne with 1.5TB for MasterDB and another 1.5TB volumne for ReadReplica)  
