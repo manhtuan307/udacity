@@ -1,0 +1,20 @@
+With Initial-Cost-Estimation, I assume that:
+- application running for long-term plan (will be re-evaluated yearly), so those service such as RDS or EC2 will be use resevered instances (without upfront cost) to save money
+- a user upload around 0.1 GBs per month in average, which include images, videos, and other content. So we need: 50000 x 0.1 = 5000 GB ~ nearly 5TB new for each month
+- a user spend around 30 minutes per day for the social media app in average, each minute there is around 10 requests to system to get content (images, videos, etc) or requests for API.
+  With that assumption: 50000 x (30 x 10 x 30) = 450 millions of requests
+- each NAT gateway need around 2 TB each month to get several content from internet or integrate with third-party services to bring convinience for users 
+
+
+Assume that users just usually watch content which be uploaded in 3 recent months and just sometimes watch older content.
+So around 15 TB for S3 standard access should be enough and older content should be moved to cheaper storage classes.
+
+User should also be able to access them quickly when needed for content within 1 year (9 months except 3 most recent months), so S3 Glacier Instant Retrieval should be a good choice.
+--> need around 45 TB for this purpose
+
+For those content which older than 1 year, we can use S3 Glacier Flexible Retrieval. Assume that we just keep content for maximum 3 years.
+-> so we need 90 TB for 2 remaining years (except 12 recent months)
+
+Assume each month, for CloudFront we need
+- around 5 TB data transfer for content which not be cached at Edge Server, need to access to S3 origin to get those data and cache at Edge Server after that.
+- around 30 TB to deliver content which be cached at Edge Server to client machines

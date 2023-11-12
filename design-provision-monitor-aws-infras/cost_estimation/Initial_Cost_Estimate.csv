@@ -1,21 +1,22 @@
 ﻿Estimate summary
 Upfront cost,Monthly cost,Total 12 months cost,Currency
-0,8527.87,102334.44,USD
+0,8485.64,101827.68,USD
 ,,* Includes upfront cost
 
 
 Detailed Estimate
 Group hierarchy,Region,Description,Service,Upfront,Monthly,First 12 months total,Currency,Status,Configuration summary
-Initial_Cost_Estimate,US East (N. Virginia),Web Servers (4 instances),Amazon EC2 ,0,283.24,3398.88,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 4), Advance EC2 instance (m5.xlarge), Pricing strategy ( 3 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
-Initial_Cost_Estimate,US East (N. Virginia),Application Servers (4 instances),Amazon EC2 ,0,283.24,3398.88,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 4), Advance EC2 instance (m5.xlarge), Pricing strategy ( 3 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
-Initial_Cost_Estimate,US East (N. Virginia),Database (1 MasterDB and 1 ReadReplica),Amazon RDS for PostgreSQL,0,3993.92,47927.04,USD,,"Storage volume (General Purpose SSD (gp2)), Storage amount (2 TB), Nodes (2), Instance Type (db.m5.2xlarge), Utilization (On-Demand only) (100 %Utilized/Month), Deployment Option (Multi-AZ), Pricing Model (OnDemand), Additional backup storage (10 TB)"
-Initial_Cost_Estimate,US East (N. Virginia),Application Load Balancers (2 load balancers),Application Load Balancer,0,67.89,814.68,USD,,Number of Application Load Balancers (2)
+Initial_Cost_Estimate,US East (N. Virginia),Web Servers (4 instances),Amazon EC2 ,0,411.72,4940.64,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 4), Advance EC2 instance (m5.xlarge), Pricing strategy ( 1 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+Initial_Cost_Estimate,US East (N. Virginia),Application Servers (4 instances),Amazon EC2 ,0,411.72,4940.64,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 4), Advance EC2 instance (m5.xlarge), Pricing strategy ( 1 Year  None upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+Initial_Cost_Estimate,US East (N. Virginia),Database (1 MasterDB and 1 ReadReplica),Amazon RDS for PostgreSQL,0,3246.5460000000003,38958.55,USD,,"Storage volume (General Purpose SSD (gp2)), Storage amount (2 TB), Nodes (2), Instance Type (db.m5.2xlarge), Utilization (On-Demand only) (100 %Utilized/Month), Deployment Option (Multi-AZ), Pricing Model (Reserved), Lease Offering Term (1yr), Purchase Option (No Upfront), Additional backup storage (10 TB)"
+Initial_Cost_Estimate,US East (N. Virginia),Application Load Balancers (2 load balancers),Application Load Balancer,0,50.370000000000005,604.44,USD,,Number of Application Load Balancers (2)
 Initial_Cost_Estimate,US East (N. Virginia),NAT Gateways (2 instances + Data Transfer by NAT),Network Address Translation (NAT) Gateway,0,250.02,3000.24,USD,,Number of NAT Gateways (2)
 Initial_Cost_Estimate,US East (N. Virginia),NAT Gateways (2 instances + Data Transfer by NAT),Data Transfer,0,0,0.00,USD,,"DT Inbound: Internet (1 TB per month), DT Outbound: Amazon CloudFront (2 TB per month), DT Intra-Region: (0 TB per month)"
-Initial_Cost_Estimate,US East (N. Virginia),S3 Storage,S3 Standard,0,471.04,5652.48,USD,,S3 Standard storage (20 TB per month)
-Initial_Cost_Estimate,US East (N. Virginia),S3 Storage,S3 Glacier Instant Retrieval,0,81.92,983.04,USD,,S3 Glacier Instant Retrieval storage (20 TB per month)
+Initial_Cost_Estimate,US East (N. Virginia),S3 Storage,S3 Standard,0,353.28,4239.36,USD,,S3 Standard storage (15 TB per month)
+Initial_Cost_Estimate,US East (N. Virginia),S3 Storage,S3 Glacier Flexible Retrieval,0,333.46,4001.52,USD,,"S3 Glacier Flexible Retrieval Average Object Size (16 MB), Provisioned Capacity Units (0), null (0), S3 Glacier Flexible Retrieval storage (90 TB per month)"
+Initial_Cost_Estimate,US East (N. Virginia),S3 Storage,S3 Glacier Instant Retrieval,0,184.32,2211.84,USD,,S3 Glacier Instant Retrieval storage (45 TB per month)
 Initial_Cost_Estimate,US East (N. Virginia),S3 Storage,Data Transfer,0,0,0.00,USD,,
-Initial_Cost_Estimate,US East (N. Virginia),CloudFront and Data Transfer,Amazon CloudFront,0,2913.6,34963.20,USD,,"Data transfer out to internet (30 TB per month), Data transfer out to origin (10 TB per month), Number of requests (HTTPS) (200000000 per month)"
+Initial_Cost_Estimate,US East (N. Virginia),CloudFront and Data Transfer,Amazon CloudFront,0,3061.2,36734.40,USD,,"Data transfer out to internet (30 TB per month), Data transfer out to origin (5 TB per month), Number of requests (HTTPS) (450000000 per month)"
 Initial_Cost_Estimate,US East (N. Virginia),Route 53,Amazon Route 53,0,183,2196.00,USD,,"Hosted Zones (1), Number of Elastic Network Interfaces (2)"
 
 
