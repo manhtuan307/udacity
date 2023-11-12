@@ -19,7 +19,7 @@ Assume each month, for CloudFront we need
 - around 5 TB data transfer for content which not be cached at Edge Server, need to access to S3 origin to get those data and cache at Edge Server after that.
 - around 30 TB to deliver content which be cached at Edge Server to client machines
 
-With around 450 millions of requests per month -> assume that those requests just distributed mostly in around 12 hours per day (users just sometimes access at night)
+With around 450 millions of requests per month -> assume that those requests just distributed mostly in around 12 hours per day (users just sometimes access at night and they need to focus at working/studying many hours per day)
 -> we have 450000000 / (30 * 12 * 3600) ~ 347 (requests per second)
 -> We can assume that at peak hour, just around 1500 requests per second for entire system.
 
