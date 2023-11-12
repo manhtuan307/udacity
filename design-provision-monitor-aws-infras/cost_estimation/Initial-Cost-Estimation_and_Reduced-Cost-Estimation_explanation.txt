@@ -29,15 +29,19 @@ With around 450 millions of requests per month -> assume that those requests jus
 -> With assumption that the application is properly designed and implemented, those requests should not consume too many resources
 --> We can assume a server with 2 vCPU and 4 GB can handle around 200 requests per second (CPU and memory should not higher than 80%)
 
---> With 2 db.m5.x2large instances for database, CPU and memory usage should not higher than 80% even in peak hours
-   -> 2 m5.xlarge instances of web servers and 2 m5.xlarge instances of application servers, the system should be able to handle normal-hours workload easily 
-		(maximum of CPU and memory usages should not higher than 30% during normal hours)
-   -> 3 m5.xlarge instances of web servers and 3 m5.xlarge instances of application servers, the system should be able to handle peak-hours workload
-        (maximum of CPU and memory usages should not higher than 70% during peak hours)
+--> 2 m5.xlarge instances of web servers and 2 m5.xlarge instances of application servers, the system should be able to handle normal-hours workload easily 
+	(maximum of CPU and memory usages should not higher than 30% during normal hours)
+--> 3 m5.xlarge instances of web servers and 3 m5.xlarge instances of application servers, the system should be able to handle peak-hours workload
+	(maximum of CPU and memory usages should not higher than 70% during peak hours)
 		
 --> If system set baseline as 2 instances for each type of servers and maximum up to 3 servers during peaks hours, it should be able to handle workload
 	--> For Reduced-Cost-Estimation, we can set baseline as 2 instances for each type of servers and maximum up to 3 servers during peak hours
-	--> With Initial-Cost-Estimation, we can set baseline as 4 instances for each type of servers and maximum up to 6 servers during peak hours
+	
+--> With Initial-Cost-Estimation, we can set baseline as 3 instances for each type of servers and maximum up to 6 servers during peak hours
+	--> it should help improve system performance and user experience
+	
+--> With 2 db.m5.x2large instances for database, CPU and memory usage should not higher than 80% even in peak hours, can be used for Reduced-Cost-Estimation
+	--> For Initial-Cost-Estimation, we can use 2 db.m5.x4large instances for database to improve system performance and user experience
 
 Assume that database size is around 512 GB after launching a few years (we can consider to archive old data to S3 Glacier Deep Archive) 
 (Assume we almost keep number and text data in database. Almost binary data such as images, videos, audios, etc. are stored in S3 buckets)
