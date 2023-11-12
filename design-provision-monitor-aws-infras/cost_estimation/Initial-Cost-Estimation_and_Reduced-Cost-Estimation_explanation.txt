@@ -1,0 +1,50 @@
+With Initial-Cost-Estimation, I assume that:
+- application running for long-term plan, so those service such as RDS or EC2 will be use resevered instances (without upfront cost) to save money
+- a user upload around 0.1 GBs per month in average, which include images, videos, and other content. So we need: 50000 x 0.1 = 5000 GB ~ nearly 5TB new for each month
+- a user spend around 30 minutes per day for the social media app in average, each minute there is around 10 requests to system to get content (images, videos, etc) or requests for API.
+  With that assumption: 50000 x (30 x 10 x 30) = 450 millions of requests
+- each NAT gateway need around 1.5 TB each month to get several content from internet or integrate with third-party services to bring convinience for users 
+
+
+Assume that users just usually watch content which be uploaded in 3 recent months and just sometimes watch older content.
+So around 15 TB for S3 standard access should be enough and older content should be moved to cheaper storage classes.
+
+User should also be able to access them quickly when needed for content within a specific period, S3 Glacier Instant Retrieval should be a good choice for this purpose
+-> For Initial-Cost-Estimation, set the period is 9 months (so user can quickly access data within 1 year, which include 3 months keeping data in S3 standard) --> need around 45 TB for this purpose
+-> For Reduced-Cost-Estimation, set the period is 3 months (so user can quickly access data within 6 months, which include 3 months keeping data in S3 standard) --> need around 15 TB for this purpose
+	
+
+For older content, we can use S3 Glacier Flexible Retrieval. We also just promise to keep data within a specific period
+-> For Initial-Cost-Estimation, promise to keep data with in 3 years. So we need to keep 2 years data in S3 Glacier Flexible Retrieval (except most recent 12 months) -> need 120TB for this purpose
+-> For Reduced-Cost-Estimation, promise to keep data with in 1 year. So we need to keep 6 months data in S3 Glacier Flexible Retrieval (except most recent 6 months) -> need 30TB for this purpose
+
+Assume each month, for CloudFront we need
+- around 5 TB data transfer for content which not be cached at Edge Server, need to access to S3 origin to get those data and cache at Edge Server after that.
+- around 30 TB to deliver content which be cached at Edge Server to client machines
+
+With around 450 millions of requests per month -> assume that those requests just mostly distributed in around 16 hours per day (users just sometimes access at night and they need to focus at working/studying many hours per day)
+-> we have 450000000 / (30 * 12 * 3600) ~ 260 (requests per second)
+-> We can assume that at peak hours (assume 1 day only have 8 peak hours), just around 1300 requests per second for entire system (5 times higher than average).
+
+-> With assumption that the application is properly designed and implemented, those requests should not consume too many resources
+--> We can assume a server with 2 vCPU and 4 GB can handle around 200 requests per second (CPU and memory should not higher than 80%)
+
+--> With 2 db.m5.x2large instances for database, CPU and memory usage should not higher than 80% even in peak hours
+   -> 2 m5.xlarge instances of web servers and 2 m5.xlarge instances of application servers, the system should be able to handle normal-hours workload easily 
+		(maximum of CPU and memory usages should not higher than 30% during normal hours)
+   -> 3 m5.xlarge instances of web servers and 3 m5.xlarge instances of application servers, the system should be able to handle peak-hours workload
+        (maximum of CPU and memory usages should not higher than 70% during peak hours)
+		
+--> If system set baseline as 2 instances for each type of servers and maximum up to 3 servers during peaks hours, it should be able to handle workload
+	--> For Reduced-Cost-Estimation, we can set baseline as 2 instances for each type of servers and maximum up to 3 servers during peak hours
+	--> With Initial-Cost-Estimation, we can set baseline as 4 instances for each type of servers and maximum up to 6 servers during peak hours
+
+Assume that database size is around 512 GB after launching a few years (we can consider to archive old data to S3 Glacier Deep Archive) 
+(Assume we almost keep number and text data in database. Almost binary data such as images, videos, audios, etc. are stored in S3 buckets)
+
+-> So need at least 1.3 TB storage volume for RDS (one 650 GB volume with for MasterDB and another 650 GB volumne for ReadReplica - 20% buffer) --> Use for Reduced-Cost-Estimation
+-> 2 TB storage volume for RDS should be better (one 1 TB volume with for MasterDB and another 1 TB volumne for ReadReplica - 100% buffer) --> Use for Initial-Cost-Estimation
+
+-> For backup storage:
+	- 5 TB should be enough for 8 days (include daily full backup and incremental backup) -> Use for Initial-Cost-Estimation
+	- 2 TB should be enough for 3 days (include daily full backup and incremental backup) -> Use for Reduced-Cost-Estimation
