@@ -18,3 +18,9 @@ For those content which older than 1 year, we can use S3 Glacier Flexible Retrie
 Assume each month, for CloudFront we need
 - around 5 TB data transfer for content which not be cached at Edge Server, need to access to S3 origin to get those data and cache at Edge Server after that.
 - around 30 TB to deliver content which be cached at Edge Server to client machines
+
+With around 450 millions of requests per month -> assume that those requests just distributed mostly in around 12 hours per day (rarely access at night)
+-> we have 450000000 / (30 * 12 * 3600) ~ 347 (requests per second)
+
+-> With assumption that the application is properly designed and implemented, those requests should not consume too many resources
+-> With 4 instances of web servers (m5.xlarge) and 4 instances of application servers and 2 db.m5.x2large we should be able to handle that workload easily.
