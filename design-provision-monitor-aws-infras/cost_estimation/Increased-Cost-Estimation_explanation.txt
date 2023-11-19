@@ -1,0 +1,20 @@
+If budget been increased to $20000, we will add some more resources to help to improve system performance and resilientcy and can serve more people
+(with assumption that the number of users will be increased after some marketing campaigns, and also there are some more users from other regions such as Europe, Asia Pacific).
+With assumption that the system traffic can be increased to 150% (or can be up to 200%) than orgiginal estimation in Initial_Cost Estimate, I suggest to add some more resources as below:
+
+- Database: upgrade database will help avoid bottle neck when there are more database read/write operations (as there are more requests coming).
+  I suggest to use AWS Aurora db cluster with more instances (to increase availability and improve read performance as more read-replicas) and each instance also use more powerful instance type (to improve read/write performance) than orgiginal estimation.
+  With new budget, I suggest to use a cluster with 3 instances with db.r5.8xlarge instance type.
+  The system also need more storage and backup storage as more data so I suggest total 10 TB for aurora cluster and 10Gb for backup storage.
+
+- Application Servers and Web Servers: adding more EC2 instances will help the system serve more requests and improve performance.
+  With new budget, I suggest to use 6 instances during normal hours and maximum up to 12 instances during peak hours.
+  As there are multiple users from many regions to assume that the number of peak hours increase from 8 to 10 hours every day.
+  
+- S3 Storage: increase S3 Storage to help system be able to keep their data when there are more users, and can keep their data longer without the need to purge them as storage limitation.
+  I suggest to increase storage for each instance type 2 times more than original estimation (30TB for S3 Standard, 90Tb for S3 Glacier Instant Retrieval, 240Tb for S3 Glacier Flexible Retrieval)
+  
+- CloudFront distribution: adding more edge servers to other regions can help reduce latency when there are requests from other regions such as Europe, Asia Pacific.
+  Assume the traffic from original region increased to 150% and there are 10% more percent from Europe, 10% from Asia Pacific
+  
+  
