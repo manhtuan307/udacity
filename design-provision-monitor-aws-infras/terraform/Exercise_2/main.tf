@@ -31,17 +31,17 @@ resource "aws_iam_role" "lambda_role" {
 data "archive_file" "python_lambda_package" {  
   type = "zip"  
   source_file = "greet_lambda.py" 
-  output_path = "lambda.zip"
+  output_path = "greet_lambda.zip"
 }
 
 resource "aws_lambda_function" "demo_lambda_function" {
     function_name = "DemoLambdaFunc"
     description   = "Example Python Lambda Function that print greeting message"
-    filename      = "lambda.zip"
+    filename      = "greet_lambda.zip"
     source_code_hash = data.archive_file.python_lambda_package.output_base64sha256
     role          = aws_iam_role.lambda_role.arn
-    runtime       = "python3.10"
-    handler       = "lambda.lambda_handler"
+    runtime       = "python3.9"
+    handler       = "greet_lambda.lambda_handler"
     memory_size   = 128
     timeout       = 30
 }
