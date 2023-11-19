@@ -1,3 +1,4 @@
 design-provision-monitor-aws-infras/terraform/Exercise_1/.terraform.lock.hcl
 design-provision-monitor-aws-infras/terraform/Exercise_1/terraform.tfstate
 design-provision-monitor-aws-infras/terraform/Exercise_1/.terraform/providers/registry.terraform.io/hashicorp/aws/5.26.0/windows_amd64/terraform-provider-aws_v5.26.0_x5.exe
+design-provision-monitor-aws-infras/terraform/Exercise_1/terraform.tfstate.backup
