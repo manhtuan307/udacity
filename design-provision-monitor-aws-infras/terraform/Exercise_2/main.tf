@@ -44,4 +44,10 @@ resource "aws_lambda_function" "demo_lambda_function" {
     handler       = "greet_lambda.lambda_handler"
     memory_size   = 128
     timeout       = 30
+
+    environment{
+      variables = {
+        greeting = "Demo Python Lambda Function"
+    }
+  }
 }

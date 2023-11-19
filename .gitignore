@@ -9,3 +9,4 @@ design-provision-monitor-aws-infras/terraform/Exercise_2/.terraform.tfstate.lock
 design-provision-monitor-aws-infras/terraform/Exercise_2/lambda.zip
 design-provision-monitor-aws-infras/terraform/Exercise_2/terraform.tfstate
 design-provision-monitor-aws-infras/terraform/Exercise_2/terraform.tfstate.backup
+design-provision-monitor-aws-infras/terraform/Exercise_2/greet_lambda.zip
