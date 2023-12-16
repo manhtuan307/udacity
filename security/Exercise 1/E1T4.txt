@@ -1,0 +1,15 @@
+Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
+
+# Poor practice 1
+The InstanceRole role (which be associated with RecipeWebServiceInstance and AttackInstance through InstanceProfileRole) has the policy "InstanceRolePolicy-C3" (defined in c3-app.yml) violates least privilege principal.
+As defined in c3-app.yml, it allow access to all S3 buckets. It should allow access to only resources under S3 bucket: cand-c3-free-recipes-***, and should restrict actions upon those resources.
+
+# Poor practice 2
+The WebAppSG security group inbound rules are not restricted enough. It allow ingress traffic from all IPs.
+It should allow requests coming from the ALB only or at least only allow those internal IPs from in the same trusted public internet.
+
+# Poor practice 3
+The RecipeWebServiceInstance EC2 instance does not reside in a private subnet even though the server is places behind an ALB
+
+# Poor practice 4
+There is no server side encryption for those S3 buckets: S3BucketRecipesFree, S3BucketRecipesSecret
