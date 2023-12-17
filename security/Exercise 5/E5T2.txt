@@ -1,0 +1,43 @@
+# Identify tools that will allow you to do the following:
+
+1. Scan infrastructure as code templates
+
+	1.1. Tools:
+		- CloudFormation
+			- Cfripper
+			- Cloudsploit
+			- cfn-lint
+		- Terraform
+			- Terrascan
+			- Regula
+			- Chef Inspec
+			
+	1.2. Example vulnerability
+
+	- Storage missing encryption (S3, EBS, etc)
+	- Security groups inbound rules too open, allow internet access from all IPs
+
+2. Scan AMI’s or containers for OS vulnerabilities
+
+	2.1. Tools:
+		- Clair
+		- Trivy
+		- Anchore
+
+	2.2. Example vulnerability
+
+	- OS vulnerabilities and backdoors
+	- Detects malwares, trojans, etc
+
+3. Scan an AWS environment for cloud configuration vulnerabilities
+
+	3.1. Tools
+		- AWS GuardDuty
+		- AWS Inspector
+		- AWS Security Hub
+		- AWS config
+
+	3.2. Example vulnerability
+	- A server instance be configured to allow SSH from all IPs from public internet
+	- An IAM role assigned a policy that allows admin access.
+	- An EBS volume has been provisioned without volume encryption.
