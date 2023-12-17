@@ -1,0 +1,10 @@
+# Identify 2-3 changes that can be made to our environment to prevent an ssh brute force attack from the internet.
+
+- Disable SSH password login for Web Service Instance
+- Restrict inbound rules of WebAppSG security group so that internet traffic cannot reach Web Service Instance.
+- Use System Manager - Session Manager to access Web Service Instance instead of SSH from internet
+
+# Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
+
+- Need to limit permissions of the InstanceRole, allow it access only free receipt bucket
+- Enable server-side encryption on the S3 buckets with KMS
