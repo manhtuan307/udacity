@@ -1,0 +1,19 @@
+# What additional architectural change can be made to reduce the internet facing attack surface of the web application instance.
+
+We can do the following to reduce internet facing attack surface:
+- Move Web Service Instance to the private subnet as ALB in public subnet is enough for internet access
+- Redirect http to https in Application Load Balancer
+- Setup WAF for Application Load Balancer
+
+# Assuming the IAM permissions for the S3 bucket are still insecure, would creating VPC private endpoints for S3 prevent the unauthorized access to the secrets bucket.
+
+Creating VPC private endpoints for S3 will not prevent unauthorized access to the secrets bucket.
+If the attacker can access the attack instance, he/she still be able to access S3 buckets.
+
+# Will applying default encryption setting to the s3 buckets encrypt the data that already exists?
+
+No, default encryption setting apply to new objects only.
+
+# What would happen if the original cloud formation templates are applied to this environment.
+
+All manual changes made by console or CLI will be reset if cloud formation templates applied.
