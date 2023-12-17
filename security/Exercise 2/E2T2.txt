@@ -1,0 +1,4 @@
+Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
+
+- S3 bucket server side encryption not enabled (missing ServerSideEncryptionConfiguration in c3-s3.yml) -> Need to add ServerSideEncryptionConfiguration
+- The WebAppSG security group should change inbound rules to restrict access from application load balancer only
