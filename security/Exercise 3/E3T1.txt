@@ -5,3 +5,10 @@
   --> LOW Severity: The Web Service Instance is being attacked by Attack Instance 
 
 # Research the AWS Guard Duty documentation page and explain how GuardDuty may have detected this attack - i.e. what was its source of information.
+
+According to its documentation page, AWS Guard Duty processes and analyzes data from data sources such as AWS CloudTrail event logs, VPC flow logs, etc to detect anomaly  or unexpected activity.
+The SSHBruteForce attack should be detected from VPC Flow Logs as this data source has network traffic information such as how many SSH attempts on specific EC2 instance
+
+Please refer to below link (search UnauthorizedAccess:EC2/SSHBruteForce)
+https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-types-ec2.html
+
