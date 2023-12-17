@@ -6,5 +6,5 @@
 
 # Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
 
-- Need to limit permissions of the InstanceRole, allow it access only free receipt bucket
-- Enable server-side encryption on the S3 buckets with KMS
+- Need to limit permissions of the InstanceRole, allow it accesses free receipt bucket only.
+- Enable server-side encryption on the S3 buckets
