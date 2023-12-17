@@ -1,4 +1,6 @@
 Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
 
 - S3 bucket server side encryption not enabled (missing ServerSideEncryptionConfiguration in c3-s3.yml) -> Need to add ServerSideEncryptionConfiguration
-- The WebAppSG security group should change inbound rules to restrict access from application load balancer only
+- The WebAppSG security group inbound rules should be changed to restrict access from application load balancer with port 5000 only (or at least only allow those IPs from trusted public subnet which contains Web Service Instance - 10.192.10.0/24).
+	The code in c3-app.yml - WebAppSG.SecurityGroupIngress allow access from all IPs with 3 ports (22, 5000, 80)
+- Http to https redirection not enabled in Application Load balancer (can be detected by AWS Config)
