@@ -14,8 +14,8 @@
 			
 	1.2. Example vulnerability
 
-	- Storage missing encryption (S3, EBS, etc)
-	- Security groups inbound rules too open, allow internet access from all IPs
+	- Storage (such as S3 bucket, EBS volume) missing encryption
+	- Security groups inbound rules too open, allow SSH from all IPs on the internet
 
 2. Scan AMI’s or containers for OS vulnerabilities
 
@@ -26,8 +26,9 @@
 
 	2.2. Example vulnerability
 
-	- OS vulnerabilities and backdoors
-	- Detects malwares, trojans, etc
+	- OS vulnerabilities (such as Vulnerable module: zlib/zlib in alpine:3.15.0 image) and backdoors
+	- Malicious functionalities in container images such as cryptocurrency mining, etc
+	- Malware, trojans, etc.
 
 3. Scan an AWS environment for cloud configuration vulnerabilities
 
@@ -38,6 +39,6 @@
 		- AWS config
 
 	3.2. Example vulnerability
-	- A server instance be configured to allow SSH from all IPs from public internet
+	- A server instance be configured to allow SSH from all IPs on the internet
 	- An IAM role assigned a policy that allows admin access.
 	- An EBS volume has been provisioned without volume encryption.
